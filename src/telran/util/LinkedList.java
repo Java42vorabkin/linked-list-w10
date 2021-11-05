@@ -231,15 +231,44 @@ public class LinkedList<T> implements List<T> {
 			current = current.next;
 		}
 	}
+	/*
 	@Override
 	public int sortedSearch(T pattern, Comparator<T> comp) {
 		// TODO Auto-generated method stub
-		return 0;
+		return Arrays.binarySearch(listToArray(), pattern, comp);
+		// Done
 	}
+	*/
+	
+	@Override
+	public int sortedSearch(T pattern, Comparator<T> comp) {
+		Node<T> currentNode = head;
+		int resIndex = 0;
+		while(currentNode != null) {
+			int resComp = comp.compare(pattern, currentNode.obj);
+			if (resComp == 0) {
+				break;
+			} else if (resComp > 0) {
+				resIndex++;
+				currentNode = currentNode.next;
+			} else if(resComp<0) {
+				resIndex = -(resIndex + 1);
+				break;
+			}
+		}
+		if(currentNode==null) {
+			resIndex = -(size+1);
+		}
+		return resIndex;
+		// Done
+	}
+	
 	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
-		
+		head = tail = null;
+		size = 0;
+		// Done
 	}
 
 }
